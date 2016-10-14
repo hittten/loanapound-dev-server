@@ -24,4 +24,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ['modifyvm', :id, '--memory', '2048']
     vb.name = 'hittten_dev_server'
   end
+
+  if is_windows_host #verify is if a windows host
+    config.vm.provision 'ansible_local' do |ansible|
+      ansible.playbook = 'provision/vagrant.yml'
+      ansible.install = true
+    end
+  else
+    config.vm.provision :ansible do |ansible|
+      ansible.playbook = 'provision/vagrant.yml'
+    end
+  end
 end
