@@ -1,0 +1,14 @@
+---
+php_packages:
+  - { name: dev, package: php5-dev }
+  - { name: pear, package: php-pear }
+  - { name: xdebug, package: php5-xdebug }
+  - { name: curl, package: php5-curl }
+  - { name: mcrypt, package: php5-mcrypt }
+  - { name: imagick, package: php5-imagick }
+  - { name: intl, package: php5-intl }
+  - { name: gd, package: php5-gd }
+  - { name: phpunit, package: phpunit }
+  - { name: php5-xsl, package: php5-xsl }
+  - { name: mongo, package: php5-mongo }
+  - { name: mysql, package: php5-mysql }

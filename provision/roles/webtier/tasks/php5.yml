@@ -1,0 +1,20 @@
+---
+- include_vars: php5.yml
+- name: Install php5-fpm
+  become: yes
+  apt:  pkg=php5-fpm state=latest
+
+- name: Install php5-cli
+  become: yes
+  apt:  pkg=php5-cli state=latest
+
+- name: php destroy www.conf
+  become: yes
+  file: dest=/etc/php5/fpm/pool.d/www.conf state=absent
+
+# PHP Packages
+- name: Install php packages
+  become: yes
+  apt:  pkg={{ item.package }} state=latest
+  with_items: "{{ php_packages }}"
+  notify: restart php5-fpm

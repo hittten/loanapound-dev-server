@@ -1,0 +1,14 @@
+---
+apache_install_modules:
+  - { module: libapache2-mod-fastcgi }
+
+apache_enable_modules:
+  - { module: actions }
+  - { module: alias }
+  - { module: fastcgi }
+  - { module: mpm_worker }
+  - { module: rewrite }
+  - { module: ssl }
+
+apache_disable_modules:
+  - { module: mpm_event }
