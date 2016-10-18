@@ -3,3 +3,4 @@
 - include: php5.yml
 - include: composer.yml
 - include: nodejs.yml
+- include: java.yml

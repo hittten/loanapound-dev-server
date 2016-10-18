@@ -1,0 +1,5 @@
+---
+java_packages:
+  - { package: oracle-java8-installer }
+  - { package: ca-certificates }
+  - { package: oracle-java8-set-default }
