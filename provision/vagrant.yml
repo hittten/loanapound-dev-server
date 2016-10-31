@@ -5,9 +5,9 @@
       user: vagrant
       home: /home/{{ user }}
   roles:
-#      - common
-#      - webtier
-#      - dbtier
+      - common
+      - webtier
+      - dbtier
       - {
             role: webproject,
             project_name: 'loan a pound api',
