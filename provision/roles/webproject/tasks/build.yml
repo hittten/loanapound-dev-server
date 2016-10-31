@@ -1,0 +1,13 @@
+---
+- include: php.yml
+
+- name:  "{{ project_name }} - clone repository"
+  become: yes
+  become_user: "{{ user }}"
+  git:
+      repo: "{{ repository }}"
+      dest: "{{ workspace }}"
+#      version: "{{ branch}}" #TODO: this fail with "Failed to checkout branch" error
+      accept_hostkey: yes
+      update: no
+  when: repository is defined

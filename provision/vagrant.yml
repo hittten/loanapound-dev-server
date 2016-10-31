@@ -5,6 +5,30 @@
       user: vagrant
       home: /home/{{ user }}
   roles:
-      - common
-      - webtier
-      - dbtier
+#      - common
+#      - webtier
+#      - dbtier
+      - {
+            role: webproject,
+            project_name: 'loan a pound api',
+            type: 'php',
+            domain: 'dev-api.loanapound.com',
+            ssl: false,
+            repository: 'git@github.com:hittten/loanapound-api.git',
+            branch: 'master',
+            workspace: "{{ home }}/Workspace/hittten/{{ domain }}",
+            public_html: "{{ workspace }}/web",
+            script: "cd {{ workspace }} && yes | ./install.sh"
+      }
+      - {
+            role: webproject,
+            project_name: 'loan a pound board',
+            type: 'npm',
+            domain: 'dev.loanapound.com',
+            ssl: false,
+            repository: 'git@github.com:hittten/loanapound-board.git',
+            branch: 'master',
+            workspace: "{{ home }}/Workspace/hittten/{{ domain }}",
+            public_html: "{{ workspace }}/app",
+            script: "cd {{ workspace }} && npm install --no-bin-links"
+      }

@@ -1,0 +1,54 @@
+---
+- name: "{{ project_name }} - Hosts file"
+  become: yes
+  lineinfile: dest=/etc/hosts state=present line='127.0.0.1 {{ domain }}'
+
+- name: "{{ project_name }} - Apache virtual host file"
+  become: yes
+  template: src=apache.virtual.host.conf.j2 dest=/etc/apache2/sites-available/{{ domain }}.conf owner=root group=root mode=644
+  notify:
+    - restart apache2
+  when: not ssl
+
+- name: "{{ project_name }} - Apache virtual ssl host file"
+  become: yes
+  template: src=apache.virtual.host.ssl.conf.j2 dest=/etc/apache2/sites-available/{{ domain }}.conf owner=root group=root mode=644
+  notify:
+    - restart apache2
+  when: ssl
+
+- name: "{{ project_name }} - Apache enable site"
+  become: yes
+  command: a2ensite {{ domain }}.conf
+  notify:
+    - restart apache2
+
+- name: "{{ project_name }} - Php fpm file"
+  become: yes
+  template: src=php.fpm.sock.conf.j2 dest=/etc/php5/fpm/pool.d/{{ domain }}.conf owner=root group=root mode=644
+  notify:
+    - restart php5-fpm
+    - restart apache2
+
+- include: php.yml
+  when: type == "php"
+
+- include: npm.yml
+  when: type == "npm"
+
+- name:  "{{ project_name }} - clone repository"
+  become: yes
+  become_user: "{{ user }}"
+  git:
+      repo: "{{ repository }}"
+      dest: "{{ workspace }}"
+#      version: "{{ branch}}" #TODO: this fail with "Failed to checkout branch" error
+      accept_hostkey: yes
+      update: no
+  when: repository is defined
+
+- name: "{{ project_name }} - executing shell"
+  become: yes
+  become_user: "{{ user }}"
+  shell: "{{ script }}"
+  when: script is defined

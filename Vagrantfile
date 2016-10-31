@@ -21,19 +21,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provider 'virtualbox' do |vb|
+    vb.customize ['setextradata', :id, 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root', '1']
     vb.customize ['modifyvm', :id, '--memory', '2048']
     vb.name = 'hittten_dev_server'
   end
 
-  config.vm.provision 'file', source: '~/.gitconfig', destination: '.gitconfig'
-  config.vm.provision 'file', source: '~/.gitignore', destination: '.gitignore'
-  config.vm.provision 'file', source: '~/.ssh/id_rsa', destination: '.ssh/id_rsa'
-  config.vm.provision 'file', source: '~/.ssh/id_rsa.pub', destination: '.ssh/id_rsa.pub'
-  config.vm.provision 'file', source: '~/.ssh/known_hosts', destination: '.ssh/known_hosts'
-
-  config.vm.provision 'shell', inline: 'chmod 400 .ssh/id_rsa'
-  config.vm.provision 'shell', inline: 'chmod 644 .ssh/id_rsa.pub'
-  config.vm.provision 'shell', inline: 'chmod 644 .ssh/known_hosts'
+  # config.vm.provision 'file', source: '~/.gitconfig', destination: '.gitconfig'
+  # config.vm.provision 'file', source: '~/.gitignore', destination: '.gitignore'
+  # config.vm.provision 'file', source: '~/.ssh/id_rsa', destination: '.ssh/id_rsa'
+  # config.vm.provision 'file', source: '~/.ssh/id_rsa.pub', destination: '.ssh/id_rsa.pub'
+  # config.vm.provision 'file', source: '~/.ssh/known_hosts', destination: '.ssh/known_hosts'
+  #
+  # config.vm.provision 'shell', inline: 'chmod 400 .ssh/id_rsa'
+  # config.vm.provision 'shell', inline: 'chmod 644 .ssh/id_rsa.pub'
+  # config.vm.provision 'shell', inline: 'chmod 644 .ssh/known_hosts'
 
   if is_windows_host #verify is if a windows host
     config.vm.provision 'ansible_local' do |ansible|
