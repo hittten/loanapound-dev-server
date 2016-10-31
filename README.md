@@ -75,7 +75,21 @@ cd loanapound-dev-server
 vagrant up
 ```
 
+## Usage
+```bash
+vagrant ssh
+cd Workspace
+```
+And do whatever you want in your linux machine.
+
 ## Notes
 This server install two projects, please see the README:
 + [Loan API](https://github.com/hittten/loanapound-api)
 + [Loan Board](https://github.com/hittten/loanapound-board)
+
+## Errors
+if you get an error at some point "[proc_open()](https://getcomposer.org/doc/articles/troubleshooting.md#proc-open-fork-failed-errors)" do this:
+```bash
+vagrant ssh
+sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024 && sudo /sbin/mkswap /var/swap.1 && sudo /sbin/swapon /var/swap.1
+```
